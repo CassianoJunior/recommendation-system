@@ -1,0 +1,23 @@
+{
+  "name": "recommendation-system",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx --env-file .env src/main.ts",
+    "start": "node --env-file .env dist/main.js",
+    "recommend": "tsx --env-file .env src/main.ts",
+    "clear-cache": "tsx --env-file .env src/main.ts --clear-cache"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3"
+  }
+}
