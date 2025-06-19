@@ -2,7 +2,7 @@ export const CONFIG = {
   RATE_LIMIT_DELAY: 2000,        // Delay between requests (ms)
   MAX_RETRIES: 3,                // Max retry attempts for failed requests
   RETRY_DELAY: 7000,             // Base delay for retries (ms)
-  BATCH_SIZE: 5,                // Number of friends to process per batch
+  BATCH_SIZE: 5,                 // Number of friends to process per batch
   MAX_FAILED_REQUESTS: 5,        // Stop processing if too many failures in a batch
   MAX_CONSECUTIVE_FAILURES: 3,   // Stop if this many consecutive batches fail
   REQUEST_TIMEOUT: 30000,        // Request timeout (ms)

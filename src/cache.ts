@@ -27,13 +27,6 @@ export function loadCache(): FriendDataCache | null {
       friendsData: new Map(Object.entries(data.friendsData))
     }
     
-    // Check if cache is still valid (less than 1 hour old)
-    const oneHour = 60 * 60 * 1000
-    if (Date.now() - cache.timestamp > oneHour) {
-      console.log('🗑️  Cache expired, starting fresh')
-      return null
-    }
-    
     console.log('📂 Loaded cached data from previous run')
     return cache
   } catch (error) {
