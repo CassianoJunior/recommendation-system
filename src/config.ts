@@ -1,10 +1,12 @@
 export const CONFIG = {
-  RATE_LIMIT_DELAY: 1000,        // Delay between requests (ms)
+  RATE_LIMIT_DELAY: 2000,        // Delay between requests (ms)
   MAX_RETRIES: 3,                // Max retry attempts for failed requests
-  RETRY_DELAY: 5000,             // Base delay for retries (ms)
-  MAX_FRIENDS_TO_PROCESS: 20,    // Limit friends to avoid rate limits
-  MAX_FAILED_REQUESTS: 5,        // Stop processing if too many failures
-  REQUEST_TIMEOUT: 30000         // Request timeout (ms)
+  RETRY_DELAY: 7000,             // Base delay for retries (ms)
+  BATCH_SIZE: 5,                // Number of friends to process per batch
+  MAX_FAILED_REQUESTS: 5,        // Stop processing if too many failures in a batch
+  MAX_CONSECUTIVE_FAILURES: 3,   // Stop if this many consecutive batches fail
+  REQUEST_TIMEOUT: 30000,        // Request timeout (ms)
+  PROCESS_ALL_FRIENDS: true      // Whether to process all friends or limit to first batch
 }
 
 export const STEAM_API_KEY = process.env.STEAM_API_KEY

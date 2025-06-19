@@ -125,16 +125,18 @@ This tool only accesses publicly available Steam data through the official Steam
 ## Advanced Usage
 
 ### Configuration
-You can adjust rate limiting and processing limits by modifying the `CONFIG` object in `foo.ts`:
+You can adjust rate limiting and processing limits by modifying the `CONFIG` object in `src/config.ts`:
 
 ```typescript
 const CONFIG = {
   RATE_LIMIT_DELAY: 1000,        // Delay between requests (ms)
   MAX_RETRIES: 3,                // Max retry attempts for failed requests
   RETRY_DELAY: 5000,             // Base delay for retries (ms)
-  MAX_FRIENDS_TO_PROCESS: 20,    // Limit friends to avoid rate limits
-  MAX_FAILED_REQUESTS: 5,        // Stop processing if too many failures
-  REQUEST_TIMEOUT: 30000         // Request timeout (ms)
+  BATCH_SIZE: 20,                // Number of friends to process per batch
+  MAX_FAILED_REQUESTS: 5,        // Stop processing if too many failures in a batch
+  MAX_CONSECUTIVE_FAILURES: 3,   // Stop if this many consecutive batches fail
+  REQUEST_TIMEOUT: 30000,        // Request timeout (ms)
+  PROCESS_ALL_FRIENDS: true      // Whether to process all friends or limit to first batch
 };
 ```
 
@@ -142,9 +144,12 @@ const CONFIG = {
 
 The system implements several strategies to avoid 429 errors:
 
-1. **Request Delays**: 1-second delay between API calls
-2. **Exponential Backoff**: Increasing delays for retries
-3. **Friend Limit**: Processes only first 20 friends by default
-4. **Error Threshold**: Stops after 5 failed requests
-5. **Caching**: Saves progress to avoid re-processing
-6. **Retry Logic**: Automatic retries with proper error handling
+1. **Batch Processing**: Processes friends in batches of 20 (configurable)
+2. **Request Delays**: 1-second delay between API calls
+3. **Exponential Backoff**: Increasing delays for retries
+4. **Batch-level Rate Limit Detection**: Stops processing if rate limits are hit
+5. **Inter-batch Delays**: 3-second delays between batches
+6. **Error Threshold**: Stops after consecutive failed batches
+7. **Caching**: Saves progress to avoid re-processing
+8. **Retry Logic**: Automatic retries with proper error handling
+9. **Smart Continuation**: Only continues to next batch if no rate limits detected
